@@ -1,0 +1,28 @@
+
+---trazer tabelas com quantidade para produto categoria 
+select s.product_id,s.store_id,sum(s.quantify) qtd_product ,p.product_nome, c.category_name, b.brand_name into Stocks_1 from stacks s
+inner join products p
+on s.product_id = p.product_id
+inner join categories c
+on p.category_id = c.categoryt_id
+inner join brands b
+on p.brand_id = b.brand_id
+group by s.product_id,s.store_id,p.product_nome, c.category_name, b.brand_name
+
+---trazer tabelas com quantidade para produto categoria e linkcar com stores  
+select *  into Production from Stocks_1 ss
+left join stores st
+on ss.store_id = st.store_id
+
+--- cruzar prudução com vendas 
+
+select * from Production pr 
+left join order_items oi
+on pr.product_id = oi.product_id
+left join order o 
+on oi.order_id = o.order_id
+left join customers co
+on o.customer_id = co.customer_id
+left join staff sta
+on o.staff_id = sta.staff_id
+order by oi.order_id
